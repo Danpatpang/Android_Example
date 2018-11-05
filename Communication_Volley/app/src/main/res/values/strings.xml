@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Communication_Volley</string>
+    <string name="text">데이터 입력</string>
+    <string name="button">전송</string>
+    <string name="button2">받아오기</string>
+    <string name="result">결과</string>
+</resources>
