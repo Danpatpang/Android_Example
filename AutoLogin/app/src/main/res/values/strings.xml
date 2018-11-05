@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AutoLogin</string>
+    <string name="id">id</string>
+    <string name="password">password</string>
+    <string name="button">Login</string>
+    <string name="logoutButton">Logout</string>
+</resources>
