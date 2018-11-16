@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         var loginPassword = auto.getString("inputPassword", null);
 
         if (loginId != null && loginPassword != null) {
-            // 자동 로그인
+            // 자동 로그인 상태일 때
             if (loginId.equals("danpatpang") && loginPassword.equals("123")) {
                 Toast.makeText(this, loginId + " auto Login", Toast.LENGTH_SHORT).show();
                 var intent = Intent(this, SubActivity::class.java);
