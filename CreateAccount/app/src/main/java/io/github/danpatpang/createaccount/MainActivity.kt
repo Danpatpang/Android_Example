@@ -3,6 +3,7 @@ package io.github.danpatpang.createaccount
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*;
 
@@ -67,12 +68,15 @@ class MainActivity : AppCompatActivity() {
     // 입력 유효성 검증 (추후 정규표현식)
     fun isValid(): Boolean {
         // android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()??
-        if (email.isEmpty() || android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             input_email.setError("Enter a valid email address.");
             return false;
         } else {
             input_email.setError(null);
         }
+
+        Log.d("passworddddd", password.isEmpty().toString());
+        Log.d("passworddddd", password.length.toString());
 
         if (password.isEmpty() || password.length < 6 || password.length > 12) {
             input_password.setError("between 6 and 12 alphanumeric characters.");
