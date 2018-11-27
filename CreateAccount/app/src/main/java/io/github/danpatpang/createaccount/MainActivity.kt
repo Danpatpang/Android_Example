@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         link_signup.setOnClickListener {
             var intent = Intent(this, CreateAccountActivity::class.java);
             startActivity(intent);
-            finish();
+//            finish();
         }
     }
 
