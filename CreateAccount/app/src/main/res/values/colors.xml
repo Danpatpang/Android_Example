@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+05BFFB
+349EDC
+187094
+355969
+
+01B0F1
+93E2FF
+5FD4FF
+0084B4
+-->
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
 
-    <color name="primary">#E43F3F</color>
-    <color name="primary_dark">#E12929</color>
-    <color name="primary_darker">#CC1D1D</color>
+    <color name="primary">#01B0F1</color>
+    <color name="primary_dark">#349EDC</color>
+    <color name="primary_darker">#0084B4</color>
     <color name="accent">#FFFFFF</color>
 
     <color name="black">#000000</color>
@@ -19,5 +30,6 @@
     <color name="base">#AAAAAA</color>
     <color name="iron">#CCCCCC</color>
     <color name="white">#FFFFFF</color>
+    <color name="primary_white">#EEEEEE</color>
 
 </resources>
