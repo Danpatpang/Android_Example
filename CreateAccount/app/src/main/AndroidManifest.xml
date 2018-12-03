@@ -15,14 +15,14 @@
         <!-- 테마 속성 추가 -->
         <activity
                 android:name=".MainActivity"
-                android:theme="@style/AppTheme.Dark">
+                android:theme="@style/AppTheme.Blue">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".CreateAccountActivity" android:theme="@style/AppTheme.Dark">
+        <activity android:name=".CreateAccountActivity" android:theme="@style/AppTheme.Blue">
         </activity>
     </application>
 
