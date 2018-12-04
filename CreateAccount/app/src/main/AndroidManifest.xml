@@ -22,7 +22,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".CreateAccountActivity" android:theme="@style/AppTheme.Blue">
+        <activity
+                android:name=".CreateAccountActivity"
+                android:theme="@style/AppTheme.Blue">
+        </activity>
+        <activity android:name=".ControlActivity">
         </activity>
     </application>
 

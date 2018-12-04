@@ -18,7 +18,7 @@ class CreateAccountActivity : AppCompatActivity() {
     private var signUpName: String = "";
     private var signUpEmail: String = "";
     private var signUpPassword: String = "";
-    private var url = "http://c61298ad.ngrok.io/signup";
+    private var url = "http://603be062.ngrok.io/signup";
     private var duplicationCheck: Boolean = false;
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +43,6 @@ class CreateAccountActivity : AppCompatActivity() {
                     Response.Listener<String> { response ->
                         val result: Boolean = JSONObject(response).getBoolean("check");
                         duplicationCheck = result;
-                        Log.e("dup2", duplicationCheck.toString() + "1");
                     },
                     Response.ErrorListener {
                         Toast.makeText(this, "인터넷 연결 상태를 확인해주세요.", Toast.LENGTH_SHORT).show();
@@ -68,7 +67,6 @@ class CreateAccountActivity : AppCompatActivity() {
                 android.os.Handler().postDelayed(
                     object : Runnable {
                         override fun run() {
-                            Log.e("dup2", duplicationCheck.toString() + "1");
                             if (duplicationCheck) {
                                 onSignUpSuccess();
                             } else {

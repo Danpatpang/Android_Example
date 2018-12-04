@@ -1,9 +1,11 @@
 package io.github.danpatpang.createaccount
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
@@ -16,13 +18,14 @@ import org.json.JSONObject
 class MainActivity : AppCompatActivity() {
     private var email: String = "";
     private var password: String = "";
-    private val url = "http://c61298ad.ngrok.io/signin";
+    private val url = "http://603be062.ngrok.io/signin";
     private var loginResult = false;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var storage = getSharedPreferences("tokenStore", Activity.MODE_PRIVATE);
         var queue = Volley.newRequestQueue(this);
 
         // 로그인
@@ -37,8 +40,19 @@ class MainActivity : AppCompatActivity() {
 
                 val postRequest = object : StringRequest(Request.Method.POST, url,
                     Response.Listener<String> { response ->
-                        val result: Boolean = JSONObject(response).getBoolean("check");
-                        loginResult = result;
+                        loginResult = JSONObject(response).getBoolean("check");
+
+                        // 로그인 성공일 경우 Token값 가져오기
+                        if(loginResult) {
+                            val accessToken: String = JSONObject(response).getString("accessToken");
+                            val refreshToken: String = JSONObject(response).getString("refreshToken");
+
+                            // 토큰 저장
+                            var tokenHandler = storage.edit();
+                            tokenHandler.putString("accessToken", accessToken);
+                            tokenHandler.putString("refreshToken", refreshToken);
+                            tokenHandler.commit();
+                        }
                     },
                     Response.ErrorListener {
                         Toast.makeText(this, "인터넷 연결 상태를 확인해주세요.", Toast.LENGTH_SHORT).show();
@@ -55,7 +69,7 @@ class MainActivity : AppCompatActivity() {
                 // 비동기 문제 때문에 progressDialog를 사용하여 1초 후 실행.
                 var progressDialog = ProgressDialog(this, R.style.AppTheme_Blue_Dialog);
                 progressDialog.isIndeterminate = true;
-                progressDialog.setMessage("Creating Account...");
+                progressDialog.setMessage("Checking Account...");
                 progressDialog.show();
 
                 // 1초뒤 서버 결과 확인
@@ -83,6 +97,9 @@ class MainActivity : AppCompatActivity() {
 
     fun onLoginSuccess() {
         Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show();
+        var intent = Intent(this, ControlActivity::class.java);
+        startActivity(intent);
+        finish();
     }
 
     fun onLoginFailed() {
