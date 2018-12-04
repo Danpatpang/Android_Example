@@ -26,7 +26,8 @@
                 android:name=".CreateAccountActivity"
                 android:theme="@style/AppTheme.Blue">
         </activity>
-        <activity android:name=".ControlActivity">
+        <activity android:name=".ControlActivity"
+                  android:theme="@style/AppTheme.Blue">
         </activity>
     </application>
 

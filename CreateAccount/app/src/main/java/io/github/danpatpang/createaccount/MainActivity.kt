@@ -18,7 +18,7 @@ import org.json.JSONObject
 class MainActivity : AppCompatActivity() {
     private var email: String = "";
     private var password: String = "";
-    private val url = "http://603be062.ngrok.io/signin";
+    private val url = "http://0bc894d6.ngrok.io/signin";
     private var loginResult = false;
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +46,10 @@ class MainActivity : AppCompatActivity() {
                         if(loginResult) {
                             val accessToken: String = JSONObject(response).getString("accessToken");
                             val refreshToken: String = JSONObject(response).getString("refreshToken");
+
+                            // 추후 삭제
+                            Log.e("access", accessToken);
+                            Log.e("refreshToken", refreshToken);
 
                             // 토큰 저장
                             var tokenHandler = storage.edit();

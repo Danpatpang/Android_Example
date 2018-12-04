@@ -18,7 +18,7 @@ class CreateAccountActivity : AppCompatActivity() {
     private var signUpName: String = "";
     private var signUpEmail: String = "";
     private var signUpPassword: String = "";
-    private var url = "http://603be062.ngrok.io/signup";
+    private var url = "http://0bc894d6.ngrok.io/signup";
     private var duplicationCheck: Boolean = false;
 
     override fun onCreate(savedInstanceState: Bundle?) {
