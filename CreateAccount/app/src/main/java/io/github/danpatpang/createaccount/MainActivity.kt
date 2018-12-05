@@ -5,20 +5,18 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import kotlinx.android.synthetic.main.activity_create_account.*
 import kotlinx.android.synthetic.main.activity_main.*;
 import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
     private var email: String = "";
     private var password: String = "";
-    private val url = "http://0bc894d6.ngrok.io/signin";
+    private val url = "http://4bb82cc2.ngrok.io/signin";
     private var loginResult = false;
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +25,11 @@ class MainActivity : AppCompatActivity() {
 
         var storage = getSharedPreferences("tokenStore", Activity.MODE_PRIVATE);
         var queue = Volley.newRequestQueue(this);
+
+        var autoLogin = JWTUtils().isValidToken(storage.getString("refreshToken", null));
+        if (autoLogin) {
+            onAutoLogin();
+        }
 
         // 로그인
         btn_login.setOnClickListener {
@@ -43,13 +46,9 @@ class MainActivity : AppCompatActivity() {
                         loginResult = JSONObject(response).getBoolean("check");
 
                         // 로그인 성공일 경우 Token값 가져오기
-                        if(loginResult) {
+                        if (loginResult) {
                             val accessToken: String = JSONObject(response).getString("accessToken");
                             val refreshToken: String = JSONObject(response).getString("refreshToken");
-
-                            // 추후 삭제
-                            Log.e("access", accessToken);
-                            Log.e("refreshToken", refreshToken);
 
                             // 토큰 저장
                             var tokenHandler = storage.edit();
@@ -76,7 +75,7 @@ class MainActivity : AppCompatActivity() {
                 progressDialog.setMessage("Checking Account...");
                 progressDialog.show();
 
-                // 1초뒤 서버 결과 확인
+                // 2초뒤 서버 결과 확인
                 android.os.Handler().postDelayed(
                     object : Runnable {
                         override fun run() {
@@ -97,6 +96,12 @@ class MainActivity : AppCompatActivity() {
             var intent = Intent(this, CreateAccountActivity::class.java);
             startActivity(intent);
         }
+    }
+
+    fun onAutoLogin() {
+        var intent = Intent(this, ControlActivity::class.java);
+        startActivity(intent);
+        finish();
     }
 
     fun onLoginSuccess() {

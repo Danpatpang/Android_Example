@@ -8,7 +8,7 @@ import android.util.Log
 import kotlinx.android.synthetic.main.activity_control.*;
 
 class ControlActivity : AppCompatActivity() {
-    private var url = "http://0bc894d6.ngrok.io/";
+    private var url = "http://4bb82cc2.ngrok.io/";
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,8 +18,6 @@ class ControlActivity : AppCompatActivity() {
 
         accessToken.text = storage.getString("accessToken",null);
         refreshToken.text = storage.getString("refreshToken",null);
-
-        Log.e("isValidToken", JWTUtils().isValidToken(storage.getString("accessToken", null)).toString());
 
         btn_logout.setOnClickListener {
             logout(storage);
