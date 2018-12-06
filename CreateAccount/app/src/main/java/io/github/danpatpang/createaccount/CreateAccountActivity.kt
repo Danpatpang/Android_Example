@@ -1,10 +1,8 @@
 package io.github.danpatpang.createaccount
 
 import android.app.ProgressDialog
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
@@ -18,8 +16,8 @@ class CreateAccountActivity : AppCompatActivity() {
     private var signUpName: String = "";
     private var signUpEmail: String = "";
     private var signUpPassword: String = "";
-    private var url = "http://4bb82cc2.ngrok.io/signup";
-    private var duplicationCheck: Boolean = false;
+    private var url = "http://d714d1f9.ngrok.io/register";
+    private var registerResult: Boolean = false;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
@@ -38,12 +36,12 @@ class CreateAccountActivity : AppCompatActivity() {
             } else {
                 btn_signup.isEnabled = false;
 
-                // 서버로 데이터를 보낸 후 응답 값으로 email 중복 확인
+                // 서버로 데이터를 보낸 후 응답 값으로 회원가입 결과 확인
                 val postRequest = object : StringRequest(Request.Method.POST, url,
                     Response.Listener<String> { response ->
-                        val result: Boolean = JSONObject(response).getBoolean("check");
-                        duplicationCheck = result;
+                        registerResult = JSONObject(response).getBoolean("result");
                     },
+
                     Response.ErrorListener {
                         Toast.makeText(this, "인터넷 연결 상태를 확인해주세요.", Toast.LENGTH_SHORT).show();
                     }) {
@@ -67,7 +65,7 @@ class CreateAccountActivity : AppCompatActivity() {
                 android.os.Handler().postDelayed(
                     object : Runnable {
                         override fun run() {
-                            if (duplicationCheck) {
+                            if (registerResult) {
                                 onSignUpSuccess();
                             } else {
                                 onSignUpFailed();
@@ -81,7 +79,7 @@ class CreateAccountActivity : AppCompatActivity() {
         }
 
         link_login.setOnClickListener {
-            startMainActivity();
+            finish();
         }
     }
 
@@ -91,7 +89,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
     fun onSignUpSuccess() {
         Toast.makeText(this, "회원가입 성공!", Toast.LENGTH_SHORT).show();
-        startMainActivity();
+        finish();
     }
 
     fun isValid(): Boolean {
@@ -99,34 +97,28 @@ class CreateAccountActivity : AppCompatActivity() {
 
         // 이름 확인
         if (!Pattern.matches("^(?=.*[a-zA-Z\\d가-힣]).{1,6}$", signUpName)) {
-            input_signup_name.setError("이름은 최대 6자까지 가능합니다.");
+            input_signup_name.error = "이름은 최대 6자까지 가능합니다.";
             check = false;
         } else {
-            input_signup_name.setError(null);
+            input_signup_name.error = null;
         }
 
         // 이메일 형식 확인
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(signUpEmail).matches()) {
-            input_signup_email.setError("올바른 이메일 형식을 입력해주세요.");
+            input_signup_email.error = "올바른 이메일 형식을 입력해주세요.";
             check = false;
         } else {
-            input_signup_email.setError(null);
+            input_signup_email.error = null;
         }
 
         // 비밀번호 확인
         if (!Pattern.matches("^(?=.*\\d)(?=.*[a-zA-Z])(?=.*[~`!@#$%\\^&*()-]).{6,14}$", signUpPassword)) {
-            input_signup_password.setError("특수문자 포함 6-14자리를 입력해주세요.");
+            input_signup_password.error = "특수문자 포함 6-14자리를 입력해주세요.";
             check = false;
         } else {
-            input_signup_password.setError(null);
+            input_signup_password.error = null;
         }
 
         return check;
-    }
-
-    // MainActivity로 이동
-    fun startMainActivity() {
-        var intent = Intent(this, MainActivity::class.java);
-        startActivity(intent);
     }
 }

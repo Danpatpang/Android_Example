@@ -16,7 +16,7 @@ import org.json.JSONObject
 class MainActivity : AppCompatActivity() {
     private var email: String = "";
     private var password: String = "";
-    private val url = "http://4bb82cc2.ngrok.io/signin";
+    private val url = "http://d714d1f9.ngrok.io/login";
     private var loginResult = false;
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,8 +45,7 @@ class MainActivity : AppCompatActivity() {
                     Response.Listener<String> { response ->
                         loginResult = JSONObject(response).getBoolean("check");
 
-                        // 로그인 성공일 경우 Token값 가져오기
-                        if (loginResult) {
+                        if (loginResult) {  // 로그인 성공일 경우 Token값 가져오기
                             val accessToken: String = JSONObject(response).getString("accessToken");
                             val refreshToken: String = JSONObject(response).getString("refreshToken");
 
@@ -57,6 +56,7 @@ class MainActivity : AppCompatActivity() {
                             tokenHandler.commit();
                         }
                     },
+
                     Response.ErrorListener {
                         Toast.makeText(this, "인터넷 연결 상태를 확인해주세요.", Toast.LENGTH_SHORT).show();
                     }) {
@@ -118,10 +118,10 @@ class MainActivity : AppCompatActivity() {
     // 입력 유효성 검증 (이메일만)
     fun isValid(): Boolean {
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            input_email.setError("Enter a valid email address.");
+            input_email.error = "Enter a valid email address.";
             return false;
         } else {
-            input_email.setError(null);
+            input_email.error = null;
         }
 
         return true;
